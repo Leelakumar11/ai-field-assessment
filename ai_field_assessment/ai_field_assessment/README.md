@@ -30,7 +30,7 @@ Manual demos: `python task2_mcp_gateway/mock_downstream.py` then `GATEWAY_JWT_SE
 - Invalid params must be a real JSON-RPC `-32602`. The SDK's `@call_tool()` decorator turns *every* exception into an `isError` result, so the raw `CallToolRequest` handler is registered instead. Domain failures (customer not found) stay `isError` results, because the request was valid.
 - stdout purity: logging is bound to stderr at import, and after the SDK captures the real stdout, `sys.stdout` is rebound to stderr so a stray `print()` can't corrupt the stream.
 - Strictness: `fullmatch` with `[0-9]` (not `$`/`\d`, which accept `"CUST-00001\n"` and Arabic-Indic digits), strict types (no `"19.99"` strings or `True` as an amount), NaN/inf rejected, at most 2 decimals, `extra="forbid"`, reason length measured after trimming, validation errors never echo input.
-- The SDK's default for unexpected exceptions is code `0` plus `str(exc)`. That leaks internals, so it's wrapped to `-32603 Internal error`.
+- The SDK's default for unexpected exceptions is code `0` plus `str(exc)`. That leaks internals, so it's wrapped 
 
 **Task 2**
 - Forwards the original request bytes, never a re-serialisation of what it inspected.
